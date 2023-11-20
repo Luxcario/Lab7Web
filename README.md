@@ -297,9 +297,140 @@ Untuk melihat hasilnya gunakan URL, http://localhost/namaFolder/namaFile.
 <hr>
 
 **Pertanyaan dan Tugas**
+
 Buatlah program PHP sederhana dengan menggunakan form input yang menampilkan 
 nama, tanggal lahir dan pekerjaan. Kemudian tampilkan outputnya dengan menghitung 
 umur berdasarkan inputan tanggal lahir. Dan pilihan pekerjaan dengan gaji yang 
 berbeda-beda sesuai pilihan pekerjaan
+
+**Code**
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Dasar</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+    <style>
+        h1{
+            text-align: center;
+        }
+        .conteiner1{
+            font-family: "Open Sans", "sans-serif";
+            display: flex;
+            justify-content: center;
+        }
+        form{
+            background: rgb(180, 180, 180);
+            padding: 40px;
+            border-radius: 15px;
+        }
+        .finput{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            
+        }
+        form label{
+            font-size: 20px;
+        }
+        form input,
+        form select{
+            height: 40px;
+            font-size: 20px;
+            padding: 10px;
+            margin: 10px;
+            width: 500px;
+            border: 0;
+            border-radius: 5px;
+        }
+        .sbmt{
+            
+            width: 100px;
+            margin: 0;
+            margin-top:10px;
+            font-weight: bold;
+        }
+        .sbmt:hover{
+            background-color: rgb(140, 140, 140);
+            
+        }
+        h2{
+            text-align: center;
+        }
+        p{
+            box-sizing: border-box;
+            text-align: center;
+        }
+        span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header class="pt-3">
+        <h1 class="mt-2 mb-2 me-1 ms-1 text-body-tertiary fw-bold">Form Input</h1>
+    </header>
+    <div class="conteiner1">
+        <form method="POST">
+            <div class="finput">
+                <label for="nama">Nama</label>
+                <input type="text" name="nama">
+            </div>
+            <div class="finput">
+                <label for="lahir">Tanggal Lahir</label>
+                <input type="date" name="lahir">
+            </div>
+            <div class="finput">
+                <label for="gawean">Pekerjaan</label>
+                <select name="gawean">
+                    <option value="dosen">Dosen</option>
+                    <option value="manager">Manager</option>
+                    <option value="programer">Programer</option>
+                    <option value="editor">Editor</option>
+                </select><br>
+            </div>
+            <input type="submit" value="kirim" class="sbmt">
+        </form>
+    </div>
+    <?php
+    function menghitungUmur($lahir){
+        $today = new DateTime();
+        $lahir = new DateTime($lahir);
+        $umur = $today ->diff($lahir);
+        return $umur->y;
+    }
+    $gaji = array(
+        'dosen' => 4000000,
+        'manager' => 5000000,
+        'programer' => 5000000,
+        'editor' => 4000000
+    );
+    if($_SERVER["REQUEST_METHOD"]== "POST"){
+        $nama = $_POST["nama"];
+        $lahir = $_POST["lahir"];
+        $gawean = $_POST["gawean"];
+        if(empty($nama) || empty($lahir)||empty($gawean)){
+            echo "Lengkapi semua data";
+        }else {
+        $umur = menghitungUmur($lahir);
+
+        echo"<h2>Data Anda</h2>";
+        echo "<p><span>Nama         :</span> $nama</p>";
+        echo "<p><span>Tanggal Lahir :</span> $lahir</p>";
+        echo "<p><span>Umur         :</span> $umur tahun</p>";
+        echo "<p><span>Pekerjaan    :</span> $gawean</p>";
+        echo "<p><span>Gaji         :</span> " . number_format($gaji[$gawean]). "</p>";
+        }
+    }
+    ?> 
+</body>
+</html>
+```
+
+**Hasil**
 
 
